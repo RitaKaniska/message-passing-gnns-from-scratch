@@ -37,8 +37,20 @@ def add_self_loops(src, dst, num_nodes):
         dst=torch.cat([dst, torch.tensor([i])])
     return src,dst
 
-# Step 3 - compute_node_degrees (not yet solved)
-# TODO: implement
+# Step 3 - compute_node_degrees
+def compute_node_degrees(src, dst, num_nodes, edge_weight=None):
+    x = torch.zeros(num_nodes, dtype=torch.float32)
+
+    if edge_weight is None:
+        for i in dst:
+            x[i] += 1
+    else:
+        edge_weight = torch.tensor(edge_weight, dtype=torch.float32)
+
+        for i in range(len(dst)):
+            x[dst[i]] += edge_weight[i]
+
+    return x
 
 # Step 4 - symmetric_normalize_edge_weights (not yet solved)
 # TODO: implement
